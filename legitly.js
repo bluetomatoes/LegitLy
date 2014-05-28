@@ -1,5 +1,5 @@
 (function() {
-  var app, cons, exphbs, express, path;
+  var app, connect, cons, exphbs, express, mysql, path;
 
   express = require('express');
 
@@ -8,6 +8,8 @@
   cons = require('consolidate');
 
   exphbs = require('express3-handlebars');
+
+  mysql = require('mysql');
 
   app = express();
 
@@ -28,8 +30,22 @@
     return app.use(express["static"]('static'));
   });
 
+  connect = mysql.createConnection({
+    user: "root",
+    password: "",
+    database: "db_name"
+  });
+
   app.get('/', function(req, res) {
-    return res.render('home');
+    res.render('home');
+    return req.on('end', function() {
+      return connection.query('SELECT * FROM your_table;', function(error, rows, fields) {
+        res.writeHead(200, {
+          'Content-Type': 'x-application/json'
+        });
+        return res.end(JSON.stringify(rows));
+      });
+    });
   });
 
   app.listen(8080);
