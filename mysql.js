@@ -1,29 +1,28 @@
-// Include http module, 
-var http = require('http'), 
-// And mysql module you've just installed. 
-    mysql = require("mysql"); 
-      
-// Create the connection. 
-// Data is default to new mysql installation and should be changed according to your configuration. 
+var http = require('http');
+var mysql = require('mysql'); 
+
 var connection = mysql.createConnection({ 
     user: "root", 
-    password: "", 
-    database: "db_name"
+    password: "purpledemon", 
+    database: "legitly"
 }); 
  
-// Create the http server. 
-http.createServer(function (request, response) { 
-    // Attach listener on end event. 
-    request.on('end', function () { 
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+  req.on('end', function () { 
         // Query the database. 
-        connection.query('SELECT * FROM your_table;', function (error, rows, fields) { 
-            response.writeHead(200, { 
-                'Content-Type': 'x-application/json' 
+        console.log("request function loaded");
+        connection.query('SELECT * FROM legitly;', function (error, rows, fields) { 
+            res.writeHead(200, { 
+                'Content-Type': 'text/plain' 
             }); 
             // Send data as JSON string. 
             // Rows variable holds the result of the query. 
-            response.end(JSON.stringify(rows)); 
+            str = "Here:"
+            res.end(str.concat(rows)); 
+            console.log("sent as json");
         }); 
     }); 
-// Listen on the 8080 port. 
-}).listen(8080);
+}).listen(1337, '127.0.0.1');
+console.log('Server running at http://127.0.0.1:1337/');
