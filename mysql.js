@@ -8,7 +8,7 @@ var http = require('http'),
 var connection = mysql.createConnection({ 
     user: "root", 
     password: "", 
-    database: "db_name"
+    database: "legitly"
 }); 
  
 // Create the http server. 
@@ -27,3 +27,4 @@ http.createServer(function (request, response) {
     }); 
 // Listen on the 8080 port. 
 }).listen(8080);
+console.log("Server running at localhost:8080");

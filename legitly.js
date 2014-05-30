@@ -22,8 +22,8 @@
   app.set('views', path.join(__dirname, 'views'));
 
   app.configure(function() {
-    /* 'default', 'short', 'tiny', 'dev'*/
 
+    /* 'default', 'short', 'tiny', 'dev' */
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
     app.use(express.cookieParser());
