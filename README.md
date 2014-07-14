@@ -1,4 +1,0 @@
-LegitLy
-=======
-
-Legit URL Shortener

@@ -1,28 +1,45 @@
+/*
+*Module Dependencies
+*/
+
 var express = require('express'),
-    path = require('path'),
-    cons = require('consolidate'),
-    exphbs = require('express3-handlebars');
-//create our express app
-var app = express();
+	mysql = require('mysql'),
+    exphbs  = require('express3-handlebars')
+
+var connection = mysql.createConnection({
+	host: 'localhost',
+	user: 'root',
+	password: 'alpine',
+	database: 'legitly'
+});
+
+var app = express()
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
+app.use(express.logger('dev'))
 
- //setup our app to use handlebars.js for templating
-app.set('views', path.join(__dirname, 'views'));
-//add some standard express middleware
-app.configure(function() {
-    app.use(express.logger('dev')); /* 'default', 'short', 'tiny', 'dev' */
-    app.use(express.bodyParser());
-    app.use(express.cookieParser());
-    app.use(express.static('static'));
-});
- 
-//routes
-app.get('/', function(req, res) {
-    res.render('home');
-});
- 
-//have our app listen on port 3000
-app.listen(8080);
-console.log('Your app is now running at: http://127.0.0.1:8080/');
+app.use(express.static(__dirname + '/public'))
+
+app.get('/', function (req, res) {
+  res.render('home',
+  { title : 'Home' }
+  )
+})
+ connection.connect(function(err) {
+ 	if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+
+   console.log('connected as id ' + connection.threadId);
+ });
+//var sql = 'INSERT INTO legitly (' +
+
+ //connection.query(err, sql) {
+ //	if (err) throw err;
+// });
+
+
+app.listen(3000)
+console.log('Your app is now running at: http://127.0.0.1:3000/');
