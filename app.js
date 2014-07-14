@@ -3,17 +3,17 @@
 */
 
 var express = require('express'),
-	mysql = require('mysql'),
+  mysql = require('mysql'),
     exphbs  = require('express3-handlebars')
 
 var connection = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: 'alpine',
-	database: 'legitly'
+  host: 'localhost',
+  user: 'root',
+  password: 'alpine',
+  database: 'legitly'
 });
 
-var app = express()
+var app = express();
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -26,8 +26,13 @@ app.get('/', function (req, res) {
   { title : 'Home' }
   )
 })
+app.get('/about', function (req, res) {
+  res.render('about',
+  { title : 'About' }
+  )
+})
  connection.connect(function(err) {
- 	if (err) {
+  if (err) {
     console.error('error connecting: ' + err.stack);
     return;
   }
@@ -37,7 +42,7 @@ app.get('/', function (req, res) {
 //var sql = 'INSERT INTO legitly (' +
 
  //connection.query(err, sql) {
- //	if (err) throw err;
+ // if (err) throw err;
 // });
 
 
