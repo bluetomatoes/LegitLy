@@ -4,7 +4,9 @@
 
 var express = require('express'),
   mysql = require('mysql'),
-    exphbs  = require('express3-handlebars')
+  exphbs  = require('express3-handlebars'),
+  http = require('http'),
+  parse = require('url').parse
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -31,6 +33,8 @@ app.get('/about', function (req, res) {
   { title : 'About' }
   )
 })
+
+
  connection.connect(function(err) {
   if (err) {
     console.error('error connecting: ' + err.stack);
