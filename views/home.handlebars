@@ -1,7 +1,16 @@
+<title>LegitLy</title>
 
-<p id="input-text">Enter a url that will bring shame to your bibliography.</p>
-<form id="targetlink" name="input" action="/create" method="post">
-	<input type="text" name="urlToShorten" class="form-control" placeholder="Enter a URL" >
-	 <input type="submit" value="Shorten" class="btn btn-primary">
-</form>
+{{#if showForm}}
+	<p id="input-text">Enter a url that will bring shame to your bibliography.</p>
+	<form id="targetlink" name="input" action="add" method="post" >
+		<input name="urlToShorten" placeholder="Enter a URL" >
+		 <input type="submit" value="Legitimize" >
 
+	</form>
+
+		
+{{else}}
+	<p id ="input-text">Your Legitimized url is:</p>
+	<a href={{foo}}><p>{{foo}}</p></a>
+	<p>{{bar}}</p>
+{{/if}}

@@ -93,8 +93,8 @@ header {
 }
 
 #mainNav li{
-  font-family: 'Merriweather', sans-serif;
-  font-size: 20px;
+  font-family: 'lobster', sans-serif;
+  font-size: 25px;
   font-weight: 400;
   display: inline;
   text-decoration: none !important;
@@ -152,13 +152,15 @@ header {
   padding: 0px 10px;
   margin-bottom: 10px;
 }
-p {
+p, #shorturl {
   line-height: 1.8;
   text-align: center;
   font-family: "Merriweather";
   font-weight: 300;
   padding: 40px 60px 0px;
 }
+
+
 footer {
   width: 500px;
   margin: 50px auto;
@@ -193,14 +195,27 @@ a:hover {
 
 #targetlink input {
   border: 1px solid #999;
-  background: #faf9f0;
   padding: 11px 15px 11px;
-  width: 600px;
-  font: 20px 'Merriweather', "Times New Roman", Times, serif;
+  font-size: 20px;
+  background: #faf9f0;
+  font-family:  'Merriweather', "Times New Roman", Times, serif;
   font-weight:300;
 }
+#targetlink input[type="text"] {
 
-#targetlink input:focus{
+  width: 600px;
+}
+
+#targetlink input[type="text"]:focus{
     outline:none;
     border-color: #fa5b4d;   
+}
+
+#targetlink input[type="submit"]{
+}
+
+#targetlink input[type="submit"]:hover{
+  border: none;
+  background: #fa5b4d;
+  color:#fff;
 }
