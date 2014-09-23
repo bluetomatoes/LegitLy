@@ -34,6 +34,16 @@ body {
   color: #000;
   background: #fff;
 }
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+  background-color: #fff
+}
 ol,
 ul {
   list-style: none;

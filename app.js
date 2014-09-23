@@ -1,4 +1,4 @@
-
+//TODO: wehn there is no text input redirect to home
 'use strict';
 
 /*
@@ -51,7 +51,7 @@ app.use(express.logger('dev'))
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded() );
 
-app.get('/', function (req, res, next) {
+app.get('/', function (req, res) {
     res.render('home', {
         showForm: true
 
@@ -86,11 +86,12 @@ app.get('/404', function (req, res) {
 app.use(function(req,res){
     var input = req.url
     console.log(input);
-    var param = parse(input, true); 
+    var param = parse(input, true);
     if (param.pathname == '/add') {
         console.log('we found add');
         if (param.query.url != undefined) { /* We have a url to add */
             console.log("we have a url to add: "+param.query.url);
+            app.locals.long_url = param.query.url;
             /* Check whether the url has been added before */
             var short_url = ""
             var isFound;
@@ -120,63 +121,91 @@ app.use(function(req,res){
                     isFound = false;
                     console.log("not found, is found is",isFound);
                     console.log("not added");
-                    short_url = num_to_base62(id);
-                    while (short_url.length < 5) { /* Add padding */
-                        short_url = CHARS[0] + short_url;
-                    }
-                    url_to_index[param.query.url] = short_url;
-                    short_to_url[short_url] = param.query.url;
-                    id++;
-                    var short_url_string = 'http://' + '127.0.0.1' + ':' + '3000' + '/' + short_url;
-                    console.log(short_url_string);
-                    var tempAdd = param.query.url;
-                    connection.query(
-                      'INSERT INTO urls (long_url, short_url) VALUES("' + tempAdd+ '","' + short_url_string + '")',
-                      function(err){
-                        if (err){
-                          console.log(err);
-                        }
+                    var url_to_add = parse(param.query.url,true);
+                    console.log("protocol:", url_to_add.protocol)
+                    if (url_to_add.protocol == null) {
+                      
+                    }else{
+                      var hostname = url_to_add.hostname;
+                      var point1 = hostname.indexOf(".");
+                      var point2 = hostname.lastIndexOf(".");
+                      console.log("index1",point1, "index2",point2);
+                      var domain;
+                      var short_url_string;
+                      if (point1 == point2){
+                        console.log("there's only one point, big boi")
+                        domain = hostname.slice(0,point2)
+                        console.log("domain:", domain)
+                      } else{
+                        point1 = point1+1
+                        domain = hostname.slice(point1,point2)
+                        console.log("Le domain:", domain)
                       }
-                    );
+                      if (domain == "wikipedia"){
+                          console.log("WE GOT A WIKIPEDIA ON OUR HANDS FOLKS");
+                          var pathname = url_to_add.pathname;
+                          var lastSlash = pathname.lastIndexOf("/");
+                          var unFormattedTitle= pathname.substr(lastSlash+1);
 
-                    //res.end('Your short url is: <a href="' + short_url_string +'">' + short_url_string + '</a>');
-                    //res.end();
-                    res.render('home', { 
-                      title : 'Home',
-                      showForm: false,
-                      helpers: { foo: function () { return short_url_string; } }
-                    }); 
+                          var format1 = unFormattedTitle.replace(/_/g, "");
+                          console.log(format1);
+                          var tomato = toString(format1);
+                          console.log("hey bro",format1.search(/\(/));
+
+                          if(format1.search(/\(/) != -1){
+                            var format2 = format1.slice(0,format1.indexOf("("));
+                            console.log(format2);
+                            var format3 = format2.toLowerCase();
+                            console.log("format3" , format3);
+                          } else{
+                            var format3 = format1.toLowerCase();
+                            console.log("format3" , format3);
+                          }
+
+                          //TODO: Remove commas from url
+                          //
+                          short_url = format3;
+                          short_url_string = 'http://' + '127.0.0.1' + ':' + '8080' + '/' + short_url;
+                      } else {
+                        short_url = num_to_base62(id);
+                        while (short_url.length < 5) { /* Add padding */
+                            short_url = CHARS[0] + short_url;
+                        }
+                        url_to_index[param.query.url] = short_url;
+                        short_to_url[short_url] = param.query.url;
+                        id++;
+                        short_url_string = 'http://' + '127.0.0.1' + ':' + '8080' + '/' + short_url;
+                        console.log("short_url_string");                    
+                      }
+
+                      var tempAdd = param.query.url;
+                      connection.query(
+                        'INSERT INTO urls (long_url, short_url) VALUES("' + tempAdd+ '","' + short_url_string + '")',
+                        function(err){
+                          if (err){
+                            console.log(err);
+                          }
+                        }
+                      );
+                      res.render('home', { 
+                        title : 'Home',
+                        showForm: false,
+                        helpers: { foo: function () { return short_url_string; } }
+                      }); 
+                    }
                   }
                  }
                }
             )
          } 
-              
-            //res.writeHead(200, {'Content-Type': 'text/html'});
-
-              /*
-                connection.query(
-                  'SELECT long_url AS field1, short_url AS field2 FROM urls WHERE id= (SELECT MAX(id) FROM urls)',
-                  function(err,results,fields) {
-                    if (err) {
-                      console.log(err);
-                    } else {
-                      id = results[0].ID;
-                      console.log(results)
-                    }
-                    //connection.end();
-                  })
-                  */       
-        
     } else { /* Redirect user to the right place */
-        var long_url = short_to_url[param.pathname.substring(1)];
+        var long_url = app.locals.long_url
         if (long_url != undefined) {
             res.writeHead(302, {'Location': long_url});
             res.end();
         } else {
            res.writeHead(302,{'Location': "/404"})
            res.end();
-
         }
     }
 }) 
