@@ -170,7 +170,13 @@ p, #shorturl {
   padding: 40px 60px 0px;
 }
 
-
+i{
+  padding-left: 5px;
+  color: #444;
+}
+#copypastado:hover{
+  color:#df1806;
+}
 footer {
   width: 500px;
   margin: 50px auto;
