@@ -70,7 +70,6 @@ function PostCode(codestring) {
 
 app.get('/', function (req, res) {
   //res.writeHead(200, {'Content-Type': 'text/plain' });
-  //res.send("Welcome to this shitty site.");
 	res.writeHead(302,{"Location":"http://127.0.0.1:3000"});
 	res.end();
 
