@@ -1,5 +1,7 @@
 //TODO: wehn there is no text input redirect to home
-//ADD A copy paster
+//ADD A copy paster?
+//Host all fonts?
+
 'use strict';
 
 /*
@@ -10,7 +12,8 @@ var express = require('express'),
   mysql = require('mysql'),
   exphbs  = require('express3-handlebars'),
   http = require('http'),
-  parse = require('url').parse
+  parse = require('url').parse,
+  jsdom = require('jsdom')
 
 //set up the connection to mySQL database
 
@@ -30,7 +33,46 @@ var short_to_url = new Array();
 
 
 var short_to_html ="";
+var jsdom_output;
 
+var myCallback = function(data) {
+  console.log('got data: '+data);
+};
+
+var usingItNow = function(callback) {
+  callback('get it?');
+};
+
+var runjsdom = function(url){
+    var passedurl = url;
+    jsdom.env(
+      passedurl,
+      ["http://code.jquery.com/jquery.js"],
+      function (errors, window) {
+       /* console.log("there have been", window.$("title").text(), "nodejs releases!");*/
+        var $ = window.$;
+        jsdom_output = window.$("title").text()
+        console.log(jsdom_output);
+      }
+    );
+}
+var result = jsdom.env(
+      "http://nodejs.org/dist/",
+      ["http://code.jquery.com/jquery.js"],
+      function (errors, window) {
+       /* console.log("there have been", window.$("title").text(), "nodejs releases!");*/
+        var $ = window.$;
+        jsdom_output = window.$("title").text()
+        console.log(jsdom_output);
+      }
+    );
+
+var callerback = function(callback) {
+  callback("http://nodejs.org/dist/");
+  console.log("got to the callback")
+}
+var ding = runjsdom("http://nodejs.org/dist/");
+console.log("here", ding);
 
 /* Randomize CHARS if you dont want people to guess the next url generated */
 var CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHUJKLMNOPQRSTUVWXYZ';
@@ -135,7 +177,7 @@ app.use('/add',function(req,res){
 
                 if (url_to_add.protocol == null) {
                   //TODO: HTTP://Adder
-                  url 
+                  
                 }else{
                   var hostname = url_to_add.hostname;
                   var point1 = hostname.indexOf(".");
@@ -181,23 +223,25 @@ app.use('/add',function(req,res){
                       short_url_string = 'http://' + '127.0.0.1' + ':' + '8080' + '/' + teachername +'/' + short_url;
                       console.log(teachername);
                   } else {
+                    console.log("Are we even here?");
                     var urlOpts = {host: url_to_add.hostname, path: url_to_add.pathname, port: '80'};
                     var re = /(<\s*title[^>]*>(.+?)<\s*\/\s*title)>/gi;
                     var output;
                     http.get(urlOpts, function (response) {
+                        console.log("How about now?")
                         response.on('data', function (chunk) {
-                            var str=chunk.toString();
+                            var str = chunk.toString();
                             var match = re.exec(str);
                             if (match && match[2]) {
                               output = match[2];
                               console.log("location",match[2]);
+                              console.log("i win by showing up.");
                               app.locals.shortthing = output;
-                              short_url = match[2];
-                              
+                              short_url = match[2];                    
                             }
-                        });    
+                        });  
                     });
-                    console.log("man!",short_url)
+                    console.log("man!", output)
                    /* var transformed = app.locals.shortthing
                     var form1 = transformed.toLowerCase();
                     var form2 = form1.replace(' ','');
@@ -212,8 +256,8 @@ app.use('/add',function(req,res){
                     short_to_url[short_url] = param.query.url;
                     id++;*/
                     short_url_string = 'http://' + '127.0.0.1' + ':' + '8080' + '/' + short_url;
-                    console.log("short_url_string");  
-                     console.log(teachername);                  
+                    //console.log("short_url_string");  
+                    //console.log(teachername);                  
                   }
 
                   var tempAdd = param.query.url;

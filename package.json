@@ -6,5 +6,6 @@
     "express": "3.0.0alpha4",
     "express3-handlebars": "*",
     "mysql": "*",
+    "jsdom":"*"
   }
 }
