@@ -8,3 +8,7 @@ Maybe it's using biology4kids.com on your final AP Bio project. Or perhaps it's 
 LegitLy is inspired in concept by bit.ly, shadyurl.com and my former teachers.
 
 Built using node.js with Express, express3-handlebars, MySQL, and of course HTML and CSS.
+
+License: MIT License 
+http://opensource.org/licenses/MIT
+
