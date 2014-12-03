@@ -1,0 +1,17 @@
+<title>LegitLy</title>
+
+{{#if showForm}}
+	<p id="input-text">Enter a url that will bring shame to your bibliography.</p>
+	<form autocomplete="off" id="targetlink" name="input" action="add" method="post" >
+		<input name="urlToShorten" placeholder="Enter a URL" >
+		 <input type="submit" value="Legitimize" >
+
+	</form>
+
+		
+{{else}}
+	<p id ="input-text">Your Legitimized url is:</p>
+	
+	<p><a class="animated fadeIn" href={{foo}}>{{foo}}</a></p>
+
+{{/if}}

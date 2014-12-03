@@ -1,0 +1,238 @@
+/*
+ * Import nib
+ */
+/*
+ * Grab a custom font from Google
+ */
+@import url("http://fonts.googleapis.com/css?family=Quicksand");
+@import url("http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic");
+
+@font-face {
+    font-family: 'lobster-2'; /*a name to be used later*/
+    src: url('../fonts/lobstertwo-regular-webfont.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'lobster'; /*a name to be used later*/
+    src: url('../fonts/lobster-webfont/lobster_1.4-webfont.ttf'); /*URL to font*/
+}
+
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+  color: #000;
+  background: #fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+  background-color: #fff
+}
+ol,
+ul {
+  list-style: none;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+caption,
+th,
+td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+a img {
+  border: none;
+}
+/*
+ * Store the main color and
+ * background color as variables
+ */
+body {
+  font-family: 'Georgia';
+  background-color: #faf9f0;
+  color: #444;
+  padding: 50px 0 0 0;
+}
+h1 {
+	font-family: 'lobster';
+  font-size:50px;
+  text-align: center;
+  padding-top: 50px;
+}
+
+h2 {
+  font-family: 'lobster-2';
+  font-size: 20px;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+header {
+
+
+  color: #fff;
+
+/*
+   * Note the use of the `main-color`
+   * variable and the `darken` function
+   */
+  background-color: #fa5b4d;
+  border-bottom: 1px solid #df1806;
+  border-top:1px solid #df1806;
+  text-shadow: 0px -1px 0px #df1806;
+}
+
+#mainNav li{
+  font-family: 'lobster', sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  display: inline;
+  text-decoration: none !important;
+  padding: 10px;
+}
+#mainNav{
+  float: right;
+  padding-top: 20px;
+  padding-right: 0px;
+  margin-right: 20px  
+}
+
+
+.container {
+  width: 500px;
+  margin: 50px auto;
+  overflow: hidden;
+}
+.main-content {
+  float: left;
+  width: 300px;
+}
+.main-content p {
+  margin-bottom: 20px;
+}
+.sidebar {
+  float: left;
+  width: 200px;
+}
+.sidebar .widget {
+/*
+     * Note the lack of vendor
+     * prefixes here. Nib will
+     * add them for us
+     */
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  margin-left: 20px;
+  background-color: #faf9f0;
+  -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,0.8), 0px 3px 0px -2px rgba(0,0,0,0.1);
+  box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,0.8), 0px 3px 0px -2px rgba(0,0,0,0.1);
+}
+.sidebar .widget h1 {
+  font-family: 'Quicksand';
+  margin: 13px 10px 4px;
+  padding-bottom: 10px;
+  border-bottom: 1px dotted #ddd;
+  -webkit-border-radius: 2px 2px 0px 0px;
+  border-radius: 2px 2px 0px 0px;
+  margin-bottom: 10px;
+}
+.sidebar .widget p {
+  font-size: 13px;
+  padding: 0px 10px;
+  margin-bottom: 10px;
+}
+p, #shorturl {
+  line-height: 1.8;
+  text-align: center;
+  font-family: "Merriweather";
+  font-weight: 300;
+  padding: 40px 60px 0px;
+}
+
+i{
+  padding-left: 5px;
+  color: #444;
+}
+#copypastado:hover{
+  color:#df1806;
+}
+footer {
+  width: 500px;
+  margin: 50px auto;
+  border-top: 1px dotted #ccc;
+  padding-top: 5px;
+  font-size: 13px;
+  font-family: georgia;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000000;
+}
+#input-text {
+  font-style: italic;
+}
+#about-text a {
+  color: #fa5b4d ;
+}
+#noblack:hover{
+  color:inherit;
+  }
+
+#targetlink {
+  padding: 10px 0px 0px 0px;
+  text-align: center;
+}
+
+#targetlink input {
+  border: 1px solid #999;
+  padding: 11px 15px 11px;
+  font-size: 20px;
+  background: #faf9f0;
+  font-family:  'Merriweather', "Times New Roman", Times, serif;
+  font-weight:300;
+  -webkit-animation: hue 60s infinite linear;
+}
+#targetlink input[type="text"] {
+
+  width: 600px;
+}
+
+#targetlink input[type="text"]:focus{
+    outline:none;
+    border-color: #fa5b4d;   
+}
+
+#targetlink input[type="submit"]{
+}
+
+#targetlink input[type="submit"]:hover{
+  border: 1px solid #fa5b4d;
+  background: #fa5b4d;
+  color:#fff;
+}

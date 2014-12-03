@@ -1,0 +1,158 @@
+/*
+var myCallback = function(data) {
+  console.log('got data: '+data);
+};
+
+var usingItNow = function(callback) {
+  callback('get it?');
+};
+
+var runjsdom = function(url){
+    var passedurl = url;
+    jsdom.env(
+      passedurl,
+      ["http://code.jquery.com/jquery.js"],
+      function (errors, window) {
+       onsole.log("there have been", window.$("title").text(), "nodejs releases!");
+        var $ = window.$;
+        jsdom_output = window.$("title").text()
+        console.log(jsdom_output);
+      }
+    );
+}*/
+
+/*
+var result = jsdom.env(
+      "http://nodejs.org/dist/",
+      ["http://code.jquery.com/jquery.js"],
+      function (errors, window) {
+       //console.log("there have been", window.$("title").text(), "nodejs releases!");
+        var $ = window.$;
+        jsdom_output = window.$("title").text()
+        console.log(jsdom_output);
+      }
+    );
+
+var callerback = function(callback) {
+  callback("http://nodejs.org/dist/");
+  console.log("got to the callback")
+}
+var ding = runjsdom("http://nodejs.org/dist/");
+console.log("here", ding); */
+
+
+                    //str(Math.floor((Math.random()*10)+1)) + "." + str(Math.floor((Math.random()*10)+1)) + "." + str(Math.floor((Math.random()*10)+1))
+                    
+                   /* var urlOpts = {host: url_to_add.hostname, path: url_to_add.pathname, port: '80'};
+                    var re = /(<\s*title[^>]*>(.+?)<\s*\/\s*title)>/gi;
+                    var output;
+                    http.get(urlOpts, function (response) {
+                        console.log("How about now?")
+                        response.on('data', function (chunk) {
+                            var str = chunk.toString();
+                            var match = re.exec(str);
+                            if (match && match[2]) {
+                              output = match[2];
+                              console.log("location",match[2]);
+                              console.log("i win by showing up.");
+                              app.locals.shortthing = output;
+                              short_url = match[2];                    
+                            }
+                        });  
+                    }); */
+                    
+                   /* async.parallel( // the first argument is an array of functions
+                      [
+                        // this cb (callback) is what you use to let the async
+                        // function know that you're done, and give it your result
+                        function (cb) { 
+                          jsdom.env(
+                            "http://nodejs.org/dist/",
+                            ["http://code.jquery.com/jquery.js"],
+                            function (errors, window) {
+                              // do some scraping
+                             // window.$("title").text();
+                              var $ = window.$;
+                              jsdom_output = window.$("title").text();
+                              // async's callback expects an error for the first
+                              // param and the result as the second param
+                              cb(null, jsdom_output); //No error
+                            }
+                          );
+                        }
+                      ],
+                      // This is the "optional callback". We need it to render.
+                      function (err, results) {
+                        // If any of the parallel calls returned an error instead
+                        // of null, it's now in the err variable.
+                        //if (err) res.render('error_template', {error: err});
+                        //else res.render('results', { items: results });
+                        console.log("ITWOrKS",jsdom_output);
+                        locals.jsdom = jsdom_output;
+ 
+                      }
+                    );*/
+                    
+                   /* var transformed = app.locals.shortthing
+                    var form1 = transformed.toLowerCase();
+                    var form2 = form1.replace(' ','');
+                    short_url = form2;
+                    short_url = short_url.replace(' ','');
+                    short_url = short_url.toLowerCase();*/
+
+                  /*  while (short_url.length < 5) { 
+                        short_url = CHARS[0] + short_url;
+                    }
+                    url_to_index[param.query.url] = short_url;
+                    short_to_url[short_url] = param.query.url;
+                    id++;*/
+                   
+                    //console.log("short_url_string");  
+                    //console.log(teachername);   
+
+
+
+
+                    /*
+function PostCode(codestring) {
+  // Build the post string from an object
+  var post_data = querystring.stringify({
+      'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
+      'output_format': 'json',
+      'output_info': 'compiled_code',
+        'warning_level' : 'QUIET',
+        'js_code' : codestring
+  });
+
+  // An object of options to indicate where to post to
+  var post_options = {
+      host: 'cornellarchives.com',
+      port: '80',
+      path: '/add',
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': post_data.length
+      }
+  };
+
+  // Set up the request
+  var post_req = http.request(post_options, function(res) {
+      res.setEncoding('utf8');
+      res.on('data', function (chunk) {
+          console.log('Response: ' + chunk);
+      });
+  });
+
+  // post the data
+  post_req.write(codestring);
+  post_req.end();
+}*/
+
+//PostCode("http://en.wikipedia.org/wiki/Haakon_Ericsson");
+
+
+/*var querystring = require('querystring');
+var http = require('http');
+var fs = require('fs');
+var request = require('request');*/
