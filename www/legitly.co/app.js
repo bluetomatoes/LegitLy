@@ -71,7 +71,7 @@ app.use('/add',function(req,res){
     var input = req.url
     console.log(input);
     var param = parse(input, true);
-    console.log('we found add');
+    //console.log('we found add');
     if (param.query.url != undefined) { /* We have a url to add */
         console.log("we have a url to add: "+param.query.url);
         app.locals.long_url = param.query.url;
@@ -89,7 +89,7 @@ app.use('/add',function(req,res){
           }
         })
         connection.query(
-          'SELECT short_url AS thefield FROM urls WHERE long_url = "'+param.query.url+'"', 
+          'SELECT short_url AS thefield FROM urls WHERE long_url = "'+connection.escape(param.query.url)+'/' +'"', 
           function(err,results, fields){
             if (err){
               console.log(err);
@@ -121,61 +121,65 @@ app.use('/add',function(req,res){
                 }
 
                 var hostname = url_to_add.hostname;
-                var point1 = hostname.indexOf(".");
-                var point2 = hostname.lastIndexOf(".");
-                console.log("index1",point1, "index2",point2);
-                var domain;
-                var short_url_string;
-                if (point1 == point2){
-                  console.log("there's only one point, big boi")
-                  domain = hostname.slice(0,point2)
-                  console.log("domain:", domain)
-                } else{
-                  point1 = point1+1
-                  domain = hostname.slice(point1,point2)
-                  console.log("Le domain:", domain)
-                }
-                if (domain == "wikipedia"){
-                    console.log("WE GOT A WIKIPEDIA ON OUR HANDS FOLKS");
-                    var pathname = url_to_add.pathname;
-                    var lastSlash = pathname.lastIndexOf("/");
-                    var unFormattedTitle= pathname.substr(lastSlash+1);
-
-                    var format1 = unFormattedTitle.replace(/_/g, "");
-                    console.log(format1);
-                    var tomato = toString(format1);
-                    console.log("hey bro",format1.search(/\(/));
-
-                    if(format1.search(/\(/) != -1){
-                      var format2 = format1.slice(0,format1.indexOf("("));
-                      console.log(format2);
-                      var format3 = format2.toLowerCase();
-                      console.log("format3" , format3);
-                    } else{
-                      var format3 = format1.toLowerCase();
-                      console.log("format3" , format3);
-                    }
-                    if(format3.search(/,/) != -1){
-                      var format3 = format3.replace(/,/,'');
-                    }
-                    //TODO: Remove commas from url
-                    short_url = format3;
-
+                if( hostname == null) {
+                  short_url_string = "Error. Please select valid URL.";
                 } else {
-                  short_url = Math.floor((Math.random() * 9) + 1)+ "." + Math.floor((Math.random() * 9) + 1) + "." + Math.floor((Math.random() * 9) + 1);
-                  console.log(Math.floor((Math.random() * 9) + 1));               
-                }
-                short_url_string = 'http://' + 'cornellarchives.com' + '/' + teachername + '/' + short_url;
-                     
-                var tempAdd = url_to_add.href;
-                connection.query(
-                  'INSERT INTO urls (long_url, short_url) VALUES("' + tempAdd+ '","' + short_url_string + '")',
-                  function(err){
-                    if (err){
-                      console.log(err);
-                    }
+                  var point1 = hostname.indexOf(".");
+                  var point2 = hostname.lastIndexOf(".");
+                  console.log("index1",point1, "index2",point2);
+                  var domain;
+                  var short_url_string;
+                  if (point1 == point2){
+                    console.log("there's only one point, big boi")
+                    domain = hostname.slice(0,point2)
+                    console.log("domain:", domain)
+                  } else{
+                    point1 = point1+1
+                    domain = hostname.slice(point1,point2)
+                    console.log("Le domain:", domain)
                   }
-                );
+                  if (domain == "wikipedia"){
+                      console.log("WE GOT A WIKIPEDIA ON OUR HANDS FOLKS");
+                      var pathname = url_to_add.pathname;
+                      var lastSlash = pathname.lastIndexOf("/");
+                      var unFormattedTitle= pathname.substr(lastSlash+1);
+
+                      var format1 = unFormattedTitle.replace(/_/g, "");
+                      console.log(format1);
+                      var tomato = toString(format1);
+                      console.log("hey bro",format1.search(/\(/));
+
+                      if(format1.search(/\(/) != -1){
+                        var format2 = format1.slice(0,format1.indexOf("("));
+                        console.log(format2);
+                        var format3 = format2.toLowerCase();
+                        console.log("format3" , format3);
+                      } else{
+                        var format3 = format1.toLowerCase();
+                        console.log("format3" , format3);
+                      }
+                      if(format3.search(/,/) != -1){
+                        var format3 = format3.replace(/,/,'');
+                      }
+                      //TODO: Remove commas from url
+                      short_url = format3;
+
+                  } else {
+                    short_url = Math.floor((Math.random() * 9) + 1)+ "." + Math.floor((Math.random() * 9) + 1) + "." + Math.floor((Math.random() * 9) + 1);
+                    console.log(Math.floor((Math.random() * 9) + 1));               
+                  }
+                  short_url_string = 'http://' + 'cornellarchives.com' + '/' + teachername + '/' + short_url;
+                       
+                  var tempAdd = url_to_add.href;
+                  connection.query(
+                    'INSERT INTO urls (long_url, short_url) VALUES("' + connection.escape(tempAdd)+ '","' + connection.escape(short_url_string) + '")',
+                    function(err){
+                      if (err){
+                        console.log(err);
+                      }
+                    }
+                  );
+              }
                 res.render('home', { 
                   title : 'Home',
                   showForm: false,
