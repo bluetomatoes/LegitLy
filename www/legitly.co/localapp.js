@@ -164,7 +164,7 @@ app.use('/add',function(req,res){
                   console.log(Math.floor((Math.random() * 9) + 1));               
                 }
                 short_url_string = 'http://localhost:3030/' + teachername + '/' + short_url;
-                     
+                var short_url_string_display = 'http://cornellarchives.com/' + teachername + '/' + short_url;
                 var tempAdd = url_to_add.href;
                 connection.query(
                   'INSERT INTO urls (long_url, short_url) VALUES("' + tempAdd+ '","' + short_url_string + '")',
@@ -177,7 +177,7 @@ app.use('/add',function(req,res){
                 res.render('home', { 
                   title : 'Home',
                   showForm: false,
-                  helpers: { foo: function () { return short_url_string; } }
+                  helpers: { foo: function () { return short_url_string_display; } }
                 });
               }
              }
